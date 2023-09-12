@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Demo Extension",
+  "version": "0.0.1",
+  "author": "TUTORIEX",
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "logo.png",
+    "default_title": "Demo Extension 2"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentscript.js"]
+    }
+  ],
+  "icons": {
+    "128": "logo.png"
+  },
+  "permissions": [
+    "activeTab"
+  ]
+,
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "permissions": ["scripting", "tabs", "activeTab","bookmarks"],
+  "host_permissions": ["https://*"]
+}
