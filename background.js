@@ -18,13 +18,28 @@ console.log(firebase);
 
 const database = firebase.database();
 
-// Reference to the specific data you want to read (e.g., a node named "exampleData")
 const rootRef = database.ref();
 
-// Listen for changes to the data
+var finalotpValue = 0;
+
 rootRef.on("value", function (snapshot) {
   const data = snapshot.val();
-  const otpValue = data.otp; // Replace "opt" with your actual key name
-  console.log("Value of 'opt' changed to:", otpValue);
-  chrome.runtime.sendMessage({ data: otpValue, action: "otpValue" });
+  const otpValue = data.otp;
+  finalotpValue = otpValue;
+});
+
+function myBackgroundFunction(data) {
+  console.log("Function in background.js called with data:", data);
+
+  chrome.runtime.sendMessage({
+    action: "callBackgroundFunction",
+    finalotpValue,
+  });
+}
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  if (message.action === "callBackgroundFunction") {
+    console.log(message, sender, sendResponse);
+    sendResponse(finalotpValue);
+  }
 });

@@ -10,8 +10,7 @@ function delay(ms) {
 
 async function myContentScriptFunction() {
   menu.click();
-  const mobileField = document.getElementById("login-mobile");
-  const mobileField2 = document.getElementById("login-mobile-number");
+  var phoneInput = document.getElementById("login-mobile-number");
 
   await delay(2000);
   const loginButton = document.querySelector(
@@ -20,12 +19,18 @@ async function myContentScriptFunction() {
 
   console.log(loginButton);
 
-  mobileField.value = "620-156-0096";
-  mobileField2.value = "620-156-0096";
+  phoneInput.value = `+916201560096`;
 
   await delay(2000);
 
   loginButton.click();
+
+  chrome.runtime.sendMessage(
+    { action: "callBackgroundFunction", data: "Hello from content.js!" },
+    function (response) {
+      console.log("Response received in content.js:", response);
+    }
+  );
 }
 
 // Listen for messages from the popup
