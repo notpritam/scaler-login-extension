@@ -11,32 +11,45 @@ function delay(ms) {
 async function myContentScriptFunction(data) {
   menu.click();
 
-  await delay(2000);
+  await delay(3000);
 
   var phoneInput = document.getElementById("login-mobile-number");
   const loginButton = document.querySelector(
     '[data-gtm-element="login_mobile"]'
   );
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> refs/remotes/origin/main
   loginButton.addEventListener("click", () => {
-    console.log(phoneInput.value.length);
+    console.log(phoneInput.value);
   });
 
-  phoneInput.addEventListener("click", () => {
-    phoneInput.value = data;
-  });
-  await delay(1000);
-   phoneInput.click();
-
-  phoneInput.dispatchEvent(new Event("input"));
-
-    loginButton.click();
-    phoneInput.blur();
+  phoneInput.focus();
+  phoneInput.value = data;
+  loginButton.click();
  
+
+  // chrome.runtime.sendMessage(
+  //   { action: "callBackgroundFunction", data: "Hello from content.js!" },
+  //   function (response) {
+
+  //     const otpInput = document.querySelector('[data-cy="login_mobile_otp_input"]');
+
+  //     console.log("Response received in content.js:", response);
+  //     otpInput.value = response;
+
+  //     const verifyOtpButton = document.querySelector('[data-cy="login_mobile_otp_verify_button"]');
+
+  //     verifyOtpButton.click();
+
+
+  //   }
+  // );
 }
 
-const gotOTP = (data) => {
+gotOTP = (data) => {
       console.log("this is otp :- " + data);
       const otpInput = document.querySelector('[data-cy="login_mobile_otp_input"]');
       const verifyOtpButton = document.querySelector('[data-cy="login_mobile_otp_verify_button"]');
