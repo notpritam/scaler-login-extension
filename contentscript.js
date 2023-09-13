@@ -11,24 +11,29 @@ function delay(ms) {
 async function myContentScriptFunction() {
   menu.click();
 
-  await delay(2000);
+  await delay(3000);
 
   var phoneInput = document.getElementById("login-mobile-number");
   const loginButton = document.querySelector(
     '[data-gtm-element="login_mobile"]'
   );
 
-
-
   loginButton.addEventListener("click", () => {
-    console.log(phoneInput.value.length);
+    console.log(phoneInput.value);
   });
 
-  phoneInput.focus();
-  phoneInput.value = "9050731132";
-  loginButton.click();
- 
-  await delay(2000);
+  phoneInput.addEventListener("click", () => {
+    phoneInput.value = '9050731132';
+  });
+
+    phoneInput.click();
+    await delay(2000);
+    phoneInput.dispatchEvent(new Event("input"));
+
+    await delay(1000);
+
+    loginButton.click();
+    phoneInput.blur();
 
   chrome.runtime.sendMessage(
     { action: "callBackgroundFunction", data: "Hello from content.js!" },
