@@ -19,7 +19,7 @@ async function myContentScriptFunction() {
 
   console.log(loginButton);
 
-  phoneInput.value = `+916201560096`;
+  phoneInput.value = 6201560096;
 
   await delay(2000);
 
