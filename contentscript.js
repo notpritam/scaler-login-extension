@@ -8,7 +8,7 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function myContentScriptFunction() {
+async function myContentScriptFunction(data) {
   menu.click();
 
   await delay(2000);
@@ -24,7 +24,7 @@ async function myContentScriptFunction() {
   });
 
   phoneInput.focus();
-  phoneInput.value = "6201560096";
+  phoneInput.value = data;
   loginButton.click();
  
 
@@ -58,7 +58,7 @@ gotOTP = (data) => {
 // Listen for messages from the popup
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "myAction") {
-    myContentScriptFunction();////
+    myContentScriptFunction(request.data);////
   }
   if (request.action === "otpValue") {
     optValue = request.data;
