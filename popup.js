@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const mobile = document.getElementById("mobile-input");
   
-  mobile.value = 6201560096;
+  mobile.value = 9050731132;
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const activeTab = tabs[0];

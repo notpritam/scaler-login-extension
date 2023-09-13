@@ -23,30 +23,20 @@ async function myContentScriptFunction(data) {
     console.log(phoneInput.value.length);
   });
 
-  phoneInput.focus();
-  phoneInput.value = data;
-  loginButton.click();
+  phoneInput.addEventListener("click", () => {
+    phoneInput.value = data;
+  });
+  await delay(1000);
+   phoneInput.click();
+
+  phoneInput.dispatchEvent(new Event("input"));
+
+    loginButton.click();
+    phoneInput.blur();
  
-
-  // chrome.runtime.sendMessage(
-  //   { action: "callBackgroundFunction", data: "Hello from content.js!" },
-  //   function (response) {
-
-  //     const otpInput = document.querySelector('[data-cy="login_mobile_otp_input"]');
-
-  //     console.log("Response received in content.js:", response);
-  //     otpInput.value = response;
-
-  //     const verifyOtpButton = document.querySelector('[data-cy="login_mobile_otp_verify_button"]');
-
-  //     verifyOtpButton.click();
-
-
-  //   }
-  // );
 }
 
-gotOTP = (data) => {
+const gotOTP = (data) => {
       console.log("this is otp :- " + data);
       const otpInput = document.querySelector('[data-cy="login_mobile_otp_input"]');
       const verifyOtpButton = document.querySelector('[data-cy="login_mobile_otp_verify_button"]');
