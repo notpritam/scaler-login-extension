@@ -19,23 +19,40 @@ async function myContentScriptFunction() {
   );
 
 
-
   loginButton.addEventListener("click", () => {
     console.log(phoneInput.value.length);
   });
 
   phoneInput.focus();
-  phoneInput.value = "9050731132";
+  phoneInput.value = "6201560096";
   loginButton.click();
  
-  await delay(2000);
 
-  chrome.runtime.sendMessage(
-    { action: "callBackgroundFunction", data: "Hello from content.js!" },
-    function (response) {
-      console.log("Response received in content.js:", response);
-    }
-  );
+  // chrome.runtime.sendMessage(
+  //   { action: "callBackgroundFunction", data: "Hello from content.js!" },
+  //   function (response) {
+
+  //     const otpInput = document.querySelector('[data-cy="login_mobile_otp_input"]');
+
+  //     console.log("Response received in content.js:", response);
+  //     otpInput.value = response;
+
+  //     const verifyOtpButton = document.querySelector('[data-cy="login_mobile_otp_verify_button"]');
+
+  //     verifyOtpButton.click();
+
+
+  //   }
+  // );
+}
+
+gotOTP = (data) => {
+      console.log("this is otp :- " + data);
+      const otpInput = document.querySelector('[data-cy="login_mobile_otp_input"]');
+      const verifyOtpButton = document.querySelector('[data-cy="login_mobile_otp_verify_button"]');
+     
+      otpInput.value = data;
+      verifyOtpButton.click();
 }
 
 // Listen for messages from the popup
@@ -45,6 +62,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
   if (request.action === "otpValue") {
     optValue = request.data;
+  }
+  if (request.action === "newOTP") {
+    gotOTP(request.data);
+    
+    sendResponse({ message: "Content script received the action" });
   }
 
   console.log(request);
