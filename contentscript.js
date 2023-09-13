@@ -1,5 +1,6 @@
 console.log("I am content script!");
-// document.body.style.backgroundColor = "blue";
+
+var optValue = 0;
 
 const menu = document.querySelector('[data-name="academy-header-login"]');
 
@@ -32,4 +33,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "myAction") {
     myContentScriptFunction();
   }
+  if (request.action === "otpValue") {
+    optValue = request.data;
+  }
+
+  console.log(request);
 });

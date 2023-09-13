@@ -15,6 +15,7 @@
       "js": ["contentscript.js"]
     }
   ],
+  
   "icons": {
     "128": "logo.png"
   },
@@ -24,4 +25,5 @@
 
   "permissions": ["scripting", "tabs", "activeTab","bookmarks"],
   "host_permissions": ["https://*"]
+  
 }
