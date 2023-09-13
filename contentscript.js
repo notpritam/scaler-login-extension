@@ -11,17 +11,14 @@ function delay(ms) {
 async function myContentScriptFunction(data) {
   menu.click();
 
-  await delay(3000);
+  await delay(2000);
 
   var phoneInput = document.getElementById("login-mobile-number");
   const loginButton = document.querySelector(
     '[data-gtm-element="login_mobile"]'
   );
 
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/main
   loginButton.addEventListener("click", () => {
     console.log(phoneInput.value);
   });
@@ -30,23 +27,6 @@ async function myContentScriptFunction(data) {
   phoneInput.value = data;
   loginButton.click();
  
-
-  // chrome.runtime.sendMessage(
-  //   { action: "callBackgroundFunction", data: "Hello from content.js!" },
-  //   function (response) {
-
-  //     const otpInput = document.querySelector('[data-cy="login_mobile_otp_input"]');
-
-  //     console.log("Response received in content.js:", response);
-  //     otpInput.value = response;
-
-  //     const verifyOtpButton = document.querySelector('[data-cy="login_mobile_otp_verify_button"]');
-
-  //     verifyOtpButton.click();
-
-
-  //   }
-  // );
 }
 
 gotOTP = (data) => {
@@ -58,10 +38,10 @@ gotOTP = (data) => {
       verifyOtpButton.click();
 }
 
-// Listen for messages from the popup
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "myAction") {
-    myContentScriptFunction(request.data);////
+    myContentScriptFunction(request.data);
   }
   if (request.action === "otpValue") {
     optValue = request.data;
