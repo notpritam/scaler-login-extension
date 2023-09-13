@@ -23,8 +23,15 @@ async function myContentScriptFunction(data) {
     console.log(phoneInput.value);
   });
 
-  phoneInput.focus();
-  phoneInput.value = data;
+  phoneInput.addEventListener("click", () => {
+    phoneInput.setAttribute("value", data);
+  });
+
+  phoneInput.click();
+  await delay(1000);
+
+  phoneInput.dispatchEvent(new Event("input"));
+
   loginButton.click();
  
 }
