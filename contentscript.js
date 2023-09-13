@@ -10,20 +10,25 @@ function delay(ms) {
 
 async function myContentScriptFunction() {
   menu.click();
-  var phoneInput = document.getElementById("login-mobile-number");
 
   await delay(2000);
+
+  var phoneInput = document.getElementById("login-mobile-number");
   const loginButton = document.querySelector(
     '[data-gtm-element="login_mobile"]'
   );
 
-  console.log(loginButton);
 
-  phoneInput.value = 6201560096;
 
-  await delay(2000);
+  loginButton.addEventListener("click", () => {
+    console.log(phoneInput.value.length);
+  });
 
+  phoneInput.focus();
+  phoneInput.value = "9050731132";
   loginButton.click();
+ 
+  await delay(2000);
 
   chrome.runtime.sendMessage(
     { action: "callBackgroundFunction", data: "Hello from content.js!" },
@@ -36,7 +41,7 @@ async function myContentScriptFunction() {
 // Listen for messages from the popup
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "myAction") {
-    myContentScriptFunction();
+    myContentScriptFunction();////
   }
   if (request.action === "otpValue") {
     optValue = request.data;
