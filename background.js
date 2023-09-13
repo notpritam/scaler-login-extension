@@ -22,20 +22,32 @@ const rootRef = database.ref();
 
 var finalotpValue = 0;
 
+var count = 0;
+
 rootRef.on("value", function (snapshot) {
   const data = snapshot.val();
   const otpValue = data.otp;
   finalotpValue = otpValue;
+
+
+
+  if (count > 0) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      const activeTab = tabs[0];
+      chrome.tabs.sendMessage(
+        activeTab.id,
+        { action: "newOTP", data : finalotpValue },
+        function (response) {
+          // Handle response if needed
+        }
+      );
+    });
+  }
+  count++;
+
+
 });
 
-function myBackgroundFunction(data) {
-  console.log("Function in background.js called with data:", data);
-
-  chrome.runtime.sendMessage({
-    action: "callBackgroundFunction",
-    finalotpValue,
-  });
-}
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   if (message.action === "callBackgroundFunction") {
