@@ -1,16 +1,15 @@
 // popup.js
 
 document.addEventListener("DOMContentLoaded", function () {
-
   const mobile = document.getElementById("mobile-input");
-  
-  mobile.value = 9050731132;
+
+  mobile.value = 6201560096;
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const activeTab = tabs[0];
     chrome.tabs.sendMessage(
       activeTab.id,
-      { action: "myAction" , data : mobile.value},
+      { action: "myAction", data: mobile.value },
       function (response) {
         // Handle response if needed
       }
